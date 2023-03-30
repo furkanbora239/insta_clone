@@ -51,13 +51,15 @@ class _MyAppState extends State<MyApp> {
                 BottomNavigationBarItem(
                     icon: Icon(Icons.person_rounded), label: '')
               ]),
-          body: openPage[page]),
+          body: SafeArea(child: openPage[page])),
     );
   }
 }
 
 List<Widget> openPage = [
-  const HomeMainPage(),
+  const HomeMainPage(
+    appName: 'Instagram', //top app name
+  ),
   const exploreMainPage(),
   const postMainPage(),
   const realsMainPage(),

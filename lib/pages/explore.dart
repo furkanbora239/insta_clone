@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:insta_clone/provider.dart';
 import 'package:provider/provider.dart';
