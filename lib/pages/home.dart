@@ -15,24 +15,17 @@ class HomeMainPage extends StatefulWidget {
 }
 
 class _HomeMainPageState extends State<HomeMainPage> {
-  userGenerator _user = new userGenerator();
-  List<randomUserResults?>? user = [];
+  late randomUser user;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _user.fetchUser().then((value) {
-      setState(() {
-        if (kDebugMode) {
-          print('home init set state value: ${value!.results}');
-        }
-        user = value?.results;
-
-        print('home user try: ${user![0]!.email!}');
-      });
+    rUserData.fetchUser().then((value) {
+      return value! == null
+          ? throw Exception('value.results == null')
+          : user = value;
     });
-    print('home init code user result: $user');
   }
 
   @override
@@ -68,31 +61,25 @@ class _HomeMainPageState extends State<HomeMainPage> {
             // story list
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 6.67,
-            child: ListView(
+            child: ListView.builder(
               scrollDirection: Axis.horizontal,
               physics: const ClampingScrollPhysics(),
-              children: [
-                storyAvatar(
-                    UserName: 'mahmut tuncer acar',
-                    UserPP: 'https://randomuser.me/api/portraits/women/82.jpg'),
-                storyAvatar(
-                    UserName: 'blackzebra970',
-                    UserPP:
-                        'https://randomuser.me/api/portraits/med/men/73.jpg'),
-                storyAvatar(
-                    UserName: 'mahmut tuncer acar',
-                    UserPP: 'https://randomuser.me/api/portraits/women/83.jpg'),
-                storyAvatar(
-                    UserName: 'mahmut tuncer acar',
-                    UserPP: 'https://randomuser.me/api/portraits/women/85.jpg'),
-                storyAvatar(
-                    UserName: 'blackzebra970',
-                    UserPP:
-                        'https://randomuser.me/api/portraits/med/men/72.jpg'),
-                storyAvatar(
-                    UserName: userInfo().toString(),
-                    UserPP: 'https://randomuser.me/api/portraits/women/87.jpg'),
-              ],
+              itemCount: 2,
+              itemBuilder: (context, index) {
+                /* FutureBuilder<randomUser?>(
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      print(
+                          'data emin ellerde randomUserTest ${snapshot.data}');
+                      return Text('${user.results![0]!.email}');
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  },
+                  future: rUserData.fetchUser(),
+                ); */
+                return const randomUserTest();
+              },
             ))
       ],
     );
